@@ -6,19 +6,25 @@
     <title>Fabric Versions</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css">
 
+
 </head>
 
 <body>
     <h1>Fabric Latest Versions</h1>
 
-    <p>Minecraft Version:</p>
-    <select name="versions" id="versions" onchange="updateSelection()">
-    </select>
+    <img alt="Discord" src="https://img.shields.io/discord/507304429255393322.svg?label=discord"> <img
+        alt="GitHub stars" src="https://img.shields.io/github/stars/FabricMC/yarn.svg?label=Yarn&style=social"> <img
+        alt="GitHub stars" src="https://img.shields.io/github/stars/FabricMC/fabric.svg?label=Fabric&style=social">
 
+    <p>Minecraft Version:
+        <select name="versions" id="versions" onchange="updateSelection()">
+        </select>
+    </p>
     <p>Note fabric-api version may not be the correct version for the given minecraft version. See the <a
             href="https://minecraft.curseforge.com/projects/fabric/files">curseforge</a> page.</p>
 
-    <p id="newapi"></p>
+    <p>1.14.1 above now use the modular version of fabric api, this will need to be set in your build.gradle
+        <strong>Loom 0.2.2-SNAPSHOT is required for this!</strong></p>
 
     <h3>build.gradle</h3>
 
@@ -45,6 +51,17 @@ loader_version={loader_version}
 #Fabric api
 fabric_version={fabric_version}</code></pre>
     </div>
+
+    <br>
+    <hr>
+
+
+    <h1>Loom Version</h1>
+
+    <p>The recommended loom version is <strong>0.2.2-SNAPSHOT</strong> (Required for fabric-api 0.3.0 and up!)</p>
+    <p>The latest loom version is <strong>0.2.3-SNAPSHOT</strong></p>
+
+
 </body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js"></script>
@@ -142,7 +159,6 @@ fabric_version={fabric_version}</code></pre>
             versionUrl = "https://maven.fabricmc.net/net/fabricmc/fabric-api/fabric-api/maven-metadata.xml";
             mavenStr = "net.fabricmc.fabric-api:fabric-api:";
 
-            document.getElementById("newapi").innerText = "1.14.1 Pre Releases and above now default to using the modular version of fabric api, this is reflected in the build.gradle, if you are using the properties file you will need to update the maven string in your build.gradle";
         }
 
         findVersion(versionUrl,
