@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Fabric Versions</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css">
+
+</head>
+
+<body>
+    <h1>Fabric Latest Versions</h1>
+
+    <p>Minecraft Version:</p>
+    <select name="versions" id="versions" onchange="updateSelection()">
+    </select>
+
+    <p>Note fabric-api version may not be the correct version for the given minecraft version. See the <a
+            href="https://minecraft.curseforge.com/projects/fabric/files">curseforge</a> page.</p>
+
+    <p id="newapi"></p>
+
+    <h3>build.gradle</h3>
+
+
+    <div name="code">
+        <pre><code class="gradle">dependencies {
+    minecraft "com.mojang:minecraft:{minecraft_version}"
+    mappings "net.fabricmc:yarn:{yarn_version}"
+    modCompile "net.fabricmc:fabric-loader:{loader_version}"
+            
+    //Fabric api
+    modCompile "{fabric_maven}{fabric_version}"
+}</code></pre>
+    </div>
+
+
+
+    <h3>gradle.properties (Example Mod)</h3>
+    <div name="code">
+        <pre><code class="properties">minecraft_version={minecraft_version}
+yarn_mappings={yarn_version}
+loader_version={loader_version}
+
+#Fabric api
+fabric_version={fabric_version}</code></pre>
+    </div>
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js"></script>
+<script charset="UTF-8"
+    src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/gradle.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        document.querySelectorAll('pre code').forEach((block) => {
+            hljs.highlightBlock(block);
+        });
+    });
+</script>
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        //Taken from https://stackoverflow.com/questions/1144783/how-to-replace-all-occurrences-of-a-string-in-javascript
+        String.prototype.replaceAll = function (search, replacement) {
+            var target = this;
+            return target.replace(new RegExp(search, 'g'), replacement);
+        };
+
+        getJSON("https://meta.fabricmc.net/v1/versions/game", function (data) {
+            populateVersions(data);
+        });
+
+
+
+    }, false);
+
+    var mcVersions;
+
+    function populateVersions(versions) {
+        var versionList = document.getElementById("versions");
+        var stable;
+
+        for (i in versions) {
+            var version = versions[i];
+
+            if (version.stable && stable == null) {
+                stable = version.version;
+            }
+
+            var option = document.createElement("option");
+            option.text = version.version;
+            versionList.add(option);
+        }
+
+        mcVersions = versions;
+
+        var urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has("version")) {
+            versionList.value = urlParams.get("version");
+        } else {
+            versionList.value = stable;
+        }
+
+        load();
+
+    }
+
+    function updateSelection() {
+        var versionList = document.getElementById("versions");
+        insertParam("version", versionList.value);
+    }
+
+    function load() {
+        var versionList = document.getElementById("versions");
+
+        var urlParams = new URLSearchParams(window.location.search);
+
+        var version = versionList.value;
+
+        if (urlParams.has("version")) {
+            version = urlParams.get("version");
+        }
+
+        getJSON("https://meta.fabricmc.net/v1/versions/loader/" + version, function (data) {
+            var meta = data[0];
+            var codeBlocks = document.getElementsByName("code");
+            for (i in codeBlocks) {
+                var block = codeBlocks[i];
+                block.innerHTML = block.innerHTML.replaceAll("{minecraft_version}", meta.mappings.gameVersion);
+                block.innerHTML = block.innerHTML.replaceAll("{yarn_version}", meta.mappings.version);
+                block.innerHTML = block.innerHTML.replaceAll("{loader_version}", meta.loader.version);
+            }
+        });
+
+        var versionUrl = "https://maven.fabricmc.net/net/fabricmc/fabric/maven-metadata.xml";
+        var mavenStr = "net.fabricmc:fabric:";
+
+        if (version.startsWith("1.14.1")) {
+            versionUrl = "https://maven.fabricmc.net/net/fabricmc/fabric-api/fabric-api/maven-metadata.xml";
+            mavenStr = "net.fabricmc.fabric-api:fabric-api:";
+
+            document.getElementById("newapi").innerText = "1.14.1 Pre Releases and above now default to using the modular version of fabric api, this is reflected in the build.gradle, if you are using the properties file you will need to update the maven string in your build.gradle";
+        }
+
+        findVersion(versionUrl,
+            function (version) {
+                var codeBlocks = document.getElementsByName("code");
+                for (i in codeBlocks) {
+                    var block = codeBlocks[i];
+                    block.innerHTML = block.innerHTML.replaceAll("{fabric_version}", version);
+                    block.innerHTML = block.innerHTML.replaceAll("{fabric_maven}", mavenStr);
+                }
+            })
+
+
+    }
+
+    function findVersion(url, onLoad) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var parser = new DOMParser();
+                var xmlDoc = parser.parseFromString(xhttp.responseText, "text/xml");
+                onLoad(xmlDoc.getElementsByTagName("release")[0].childNodes[0].nodeValue)
+            }
+        };
+
+        //Get around caching issues
+        var milliseconds = (new Date).getTime();
+        url += "?t=" + milliseconds
+
+        xhttp.open("GET", url, true);
+        xhttp.send();
+    }
+
+    function getJSON(url, callback) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+        xhr.responseType = 'json';
+        xhr.onload = function () {
+            var status = xhr.status;
+            if (status === 200) {
+                callback(xhr.response);
+            } else {
+                console.log('Something went wrong: ' + status);
+            }
+        };
+        xhr.send();
+    };
+
+    //Thanks https://stackoverflow.com/questions/486896/adding-a-parameter-to-the-url-with-javascript
+    function insertParam(key, value) {
+        key = encodeURI(key); value = encodeURI(value);
+
+        var kvp = document.location.search.substr(1).split('&');
+
+        var i = kvp.length; var x; while (i--) {
+            x = kvp[i].split('=');
+
+            if (x[0] == key) {
+                x[1] = value;
+                kvp[i] = x.join('=');
+                break;
+            }
+        }
+
+        if (i < 0) { kvp[kvp.length] = [key, value].join('='); }
+
+        //this will reload the page, it's likely better to store this until finished
+        document.location.search = kvp.join('&');
+    }
+
+</script>
+
+</html>
