@@ -155,7 +155,20 @@ fabric_version={fabric_version}</code></pre>
         var versionUrl = "https://maven.fabricmc.net/net/fabricmc/fabric/maven-metadata.xml";
         var mavenStr = "net.fabricmc:fabric:";
 
-        if (version.startsWith("1.14.1")) {
+        var newApi = true;
+
+        for(i in mcVersions){
+            var vi = mcVersions[i].version;
+            if(vi === "1.14"){
+                newApi = false;
+                break;
+            }
+            if(vi === version){
+                break;
+            }
+        }
+
+        if (newApi) {
             versionUrl = "https://maven.fabricmc.net/net/fabricmc/fabric-api/fabric-api/maven-metadata.xml";
             mavenStr = "net.fabricmc.fabric-api:fabric-api:";
 
