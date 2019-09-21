@@ -167,10 +167,15 @@ fabric_version={fabric_version}</code></pre>
         if (newApi) {
             versionUrl = "https://maven.fabricmc.net/net/fabricmc/fabric-api/fabric-api/maven-metadata.xml";
             mavenStr = "net.fabricmc.fabric-api:fabric-api:";
-
         }
 
-        findVersion(versionUrl,
+        var branch = "1.15"
+        //TODO make this better
+        if(version === "1.14.4"){
+            branch = "1.14"
+        }
+
+        findVersion(versionUrl, branch,
             function (version) {
                 var codeBlocks = document.getElementsByName("code");
                 for (i in codeBlocks) {
@@ -183,13 +188,25 @@ fabric_version={fabric_version}</code></pre>
 
     }
 
-    function findVersion(url, onLoad) {
+    function findVersion(url, branch, onLoad) {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 var parser = new DOMParser();
                 var xmlDoc = parser.parseFromString(xhttp.responseText, "text/xml");
-                onLoad(xmlDoc.getElementsByTagName("release")[0].childNodes[0].nodeValue)
+                
+                var versions = xmlDoc.getElementsByTagName("version");
+                var latestVersion = xmlDoc.getElementsByTagName("release")[0].childNodes[0].nodeValue;
+
+                Object.keys(versions).forEach(function(value, number) {
+                    var version = versions[number].childNodes[0].nodeValue;
+                    if(version.endsWith(branch)){
+                        latestVersion = versions[number].childNodes[0].nodeValue;
+                    }
+
+                    console.log(versions[number].childNodes[0].nodeValue)
+                });
+                onLoad(latestVersion)
             }
         };
 
