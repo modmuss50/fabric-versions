@@ -125,6 +125,10 @@ body {
 	color: var(--text-color);
 }
 
+.hljs {
+	border-radius: 4px;
+}
+
 .header {
 	position: fixed;
 	top: 0;
