@@ -8,9 +8,8 @@
 	--unstable-text-color: rgb(136, 0, 0);
 	--code-text-color: rgb(68, 68, 68);
 	--code-highlight-color: rgb(0, 14, 145);
-	--translucent-accent-color: rgba(41, 97, 252, 0.2);
+	--comment-text-color: rgb(136, 136, 136);
 	--accent-text-color: rgb(245, 245, 245);
-	--accent-icon-invert: 100%;
 	--theme-icon-invert: 0%;
 	--darker-accent-color: rgb(37, 37, 37);
 	--focus-accent-color: rgb(53, 53, 53);
@@ -19,25 +18,30 @@
 	--alt-background-color: rgb(228, 228, 228);
 	--selection-color: rgba(8, 74, 255, 0.733);
 	--selection-color-theme-icon-invert: rgba(8, 74, 255, 0.733);
+	--link-color: rgb(51, 133, 255);
+	--hover-link-color: rgb(22, 111, 245);
+	--focus-link-color: rgb(10, 103, 179);
 }
 
 #dark {
 	--accent-color: rgb(24, 24, 24);
 	--text-color: rgb(238, 238, 238);
-	--unstable-text-color: rgb(218, 88, 88);
+	--unstable-text-color: rgb(221, 103, 103);
 	--code-text-color: rgb(211, 211, 211);
-	--code-highlight-color: rgb(164, 171, 243);
-	--translucent-accent-color: rgba(41, 97, 252, 0.2);
+	--code-highlight-color: rgb(164, 195, 243);
+	--comment-text-color: rgb(186, 181, 171);
 	--accent-text-color: rgb(245, 245, 245);
-	--accent-icon-invert: 100%;
 	--theme-icon-invert: 100%;
 	--darker-accent-color: rgb(37, 37, 37);
 	--focus-accent-color: rgb(53, 53, 53);
 	--background-color: rgb(10, 10, 10);
 	--card-background-color: rgb(26, 26, 26);
-	--alt-background-color: rgb(53, 53, 53);
+	--alt-background-color: rgb(50, 53, 56);
 	--selection-color: rgba(102, 143, 255, 0.733);
 	--selection-color-theme-icon-invert: rgba(153, 112, 0, 0.733);
+	--link-color: rgb(51, 162, 255);
+	--hover-link-color: rgb(84, 176, 252);
+	--focus-link-color: rgb(28, 128, 209);
 }
 
 .content {
@@ -116,6 +120,14 @@
 	color: var(--code-highlight-color);
 }
 
+.hljs {
+	border-radius: 4px;
+}
+
+.hljs-comment {
+	color: var(--comment-text-color);
+}
+
 .badge {
 	padding: 2px;
 }
@@ -123,10 +135,6 @@
 body {
 	background-color: var(--background-color);
 	color: var(--text-color);
-}
-
-.hljs {
-	border-radius: 4px;
 }
 
 .header {
@@ -195,27 +203,18 @@ body {
 }
 
 a {
+	color: var(--link-color);
 	transition: color 0.4s, text-shadow 0.4s;
 }
 
 a:hover {
 	text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.1);
+	color: var(--hover-link-color);
 }
 
 a:focus {
 	text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.1);
-}
-
-a.subtle {
-	color: var(--subtle-link-color);
-}
-
-a.subtle:hover {
-	color: var(--darker-accent-color);
-}
-
-a.subtle:focus {
-	color: var(--focus-accent-color);
+	color: var(--focus-link-color);
 }
 
 .animate {
@@ -246,7 +245,7 @@ a.subtle:focus {
 }
 
 .button.white-outline {
-	border: solid 2px rgb(255, 255, 255);
+	border: solid 2px var(--focus-accent-color);
 }
 
 .button:hover {
