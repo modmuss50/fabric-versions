@@ -1,273 +1,355 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-    <meta charset="utf-8">
-    <title>Fabric Versions</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css">
-</head>
-
-<body>
-    <h1>Fabric Latest Versions</h1>
-
-    <img alt="Discord" src="https://img.shields.io/discord/507304429255393322.svg?label=discord"> <img
-        alt="GitHub stars" src="https://img.shields.io/github/stars/FabricMC/yarn.svg?label=Yarn&style=social"> <img
-        alt="GitHub stars" src="https://img.shields.io/github/stars/FabricMC/fabric.svg?label=Fabric&style=social">
-
-    <p>Minecraft Version:
-        <select name="versions" id="versions" onchange="updateSelection()">
-        </select>
-    </p>
-    <p>Note fabric-api version may not be the correct version for the given minecraft version. See the <a
-            href="https://minecraft.curseforge.com/projects/fabric/files">curseforge</a> page.</p>
-
-    <h3>build.gradle</h3>
-
-
-    <div name="code">
-        <pre><code class="gradle">dependencies {
+    <head>
+        <meta charset="utf-8">
+        <title>Fabric Versions</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css">
+        <link rel="stylesheet" href="styles.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body id="light">
+        <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+        <script>
+            if (!Cookies.get('theme')) {
+                Cookies.set('theme', 'light')
+            }
+            if (Cookies.get('theme')) {
+                document.body.id = Cookies.get('theme')
+            }
+        </script>
+        <div class="header">
+            <div class="container">
+                <div class="row">
+                    <a id="home-link" href="#" class="col-auto home">
+                    <img class="logo" src="fabricVersions.svg">
+                    </a>
+                    <div class="col">
+                    </div>
+                    <div class="col-auto align-self-center">
+                        <a class="button white-outline hidden" id="theme-button" href="#">
+                        <img id="theme-icon" class="accent-invert" src="dark.svg">
+                        <span id="theme-text">Dark</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <a class="badge" href="https://discord.gg/v6v4pMv"><img alt="Discord" src="https://img.shields.io/discord/507304429255393322.svg?style=for-the-badge&logo=discord&label=Discord&labelColor=748ad6&logoColor=white&color=0DC634"></a> 
+                    <a class="badge" href="https://github.com/fabricmc/yarn"><img alt="Yarn GitHub" src="https://img.shields.io/github/stars/FabricMC/yarn.svg?style=for-the-badge&logo=github&label=Yarn&labelColor=24292e&logoColor=white"></a>
+                    <a class="badge" href="https://github.com/fabricmc/fabric"><img alt="Fabric API GitHub" src="https://img.shields.io/github/stars/FabricMC/fabric?style=for-the-badge&logo=github&label=Fabric API&labelColor=24292e&logoColor=white"></a>        
+                </div>
+                <div class="row justify-content-center">
+                    <div class="version-card mcversion">
+                        Minecraft Version:
+                        <select name="versions" id="versions" onchange="updateSelection()"></select>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <p><b>Note: </b><code>fabric-api</code> version may not be the correct version for the given minecraft version. See the <a href="https://minecraft.curseforge.com/projects/fabric/files">CurseForge</a> page to verify that you are using the correct version.</p>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="version-card">
+                            <div class="title">
+                                <img class="file-icon" src="gradle.svg">
+                                build.gradle
+                            </div>
+                            <div name="code">
+                                    <pre><code class="gradle">dependencies {
     minecraft "com.mojang:minecraft:{minecraft_version}"
     mappings "net.fabricmc:yarn:{yarn_version}:v2"
     modImplementation "net.fabricmc:fabric-loader:{loader_version}"
-            
-    //Fabric api
+    
+    // Fabric API
     modImplementation "{fabric_maven}{fabric_version}"
 }</code></pre>
-    </div>
-
-
-
-    <h3>gradle.properties (Example Mod)</h3>
-    <div name="code">
-        <pre><code class="properties">minecraft_version={minecraft_version}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="version-card">
+                            <div class="title">gradle.properties<div name="code">
+                                    <pre><code class="properties">minecraft_version={minecraft_version}
 yarn_mappings={yarn_version}
 loader_version={loader_version}
 
-#Fabric api
-fabric_version={fabric_version}</code></pre>
-    </div>
-
-    <br>
-    <hr>
-
+# Fabric API
+fabric_version={fabric_version}
+</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="version-card">
+                            <div class="title">Migrating Mappings</div>
+                            <div class="text">Mappings can be auto updated by using the following command. See the <a href="https://fabricmc.net/wiki/tutorial:migratemappings">wiki page</a> for more help.</div>
+                            <div name="code">
+                                <pre><code class="bash">gradlew migrateMappings --mappings "{yarn_version}"</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="version-card">
+                            <div class="title">Loom Versions</div>
+                            <div class="recommended-loom">Recommended: <span class="version">0.2.6-SNAPSHOT</span></div>
+                            <div class="unstable-loom">Unstable: <span class="version">0.2.7-SNAPSHOT</span></div>
+                            <div class="text"><b>Note: </b>When upgrading to Loom 0.2.6 make sure to take a look at the upgrade guide <a href="https://gist.github.com/modmuss50/5e9415c7b6ea0fc96e56002a2b5f4fc7">here</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            Want to help improve this page? 
+            <a id="source-button" class="button white-outline " href="https://github.com/Prospector/prospector.github.io"
+                target="_blank">
+            <img class="accent-invert" src="github.svg">
+            View source on GitHub
+            </a>
+        </div>
+    </body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js"></script>
+    <script charset="UTF-8"
+        src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/gradle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((block) => {
+                hljs.highlightBlock(block);
+            });
+        });
+    </script>
     
-    <h1>Mappings Migration</h1>
-    <p>Mappings can be auto updated by using the following command. See the <a href="https://fabricmc.net/wiki/tutorial:migratemappings">wiki page</a> for more help.</p>
-    <div name="code">
-        <pre><code class="bash">gradlew migrateMappings --mappings "{yarn_version}"</code></pre>
-    </div>
-
-    <hr>
-    <h1>Loom Version</h1>
-
-    <h3>The recommended loom version is <strong>0.2.6-SNAPSHOT</strong></h3>
-    <h4>The unstable loom version is <strong>0.2.7-SNAPSHOT</strong></h4>
-    <p>When upgrading to loom 0.2.6 make sure to take a look at the upgrade guide <a href="https://gist.github.com/modmuss50/5e9415c7b6ea0fc96e56002a2b5f4fc7">here</a></p>
-
-    <br>
-
-    <p>Want to help improve this page? Fork it on <a href="https://github.com/modmuss50/fabric-versions">github</a></p>
-
-</body>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js"></script>
-<script charset="UTF-8"
-    src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/gradle.min.js"></script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', (event) => {
-        document.querySelectorAll('pre code').forEach((block) => {
-            hljs.highlightBlock(block);
-        });
-    });
-</script>
-
-<script>
-
-    document.addEventListener('DOMContentLoaded', function () {
-
-        //Taken from https://stackoverflow.com/questions/1144783/how-to-replace-all-occurrences-of-a-string-in-javascript
-        String.prototype.replaceAll = function (search, replacement) {
-            var target = this;
-            return target.replace(new RegExp(search, 'g'), replacement);
-        };
-
-        getJSON("https://meta.fabricmc.net/v1/versions/game", function (data) {
-            populateVersions(data);
-        });
-
-
-
-    }, false);
-
-    var mcVersions;
-
-    function populateVersions(versions) {
-        var versionList = document.getElementById("versions");
-        var stable;
-
-        for (i in versions) {
-            var version = versions[i];
-
-            if (version.stable && stable == null) {
-                stable = version.version;
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+        
+            var themeButton = document.getElementById("theme-button");
+                themeButton.onclick = function () {
+                    themeButton.blur()
+                    toggleTheme()
+                    return false
+                }
+            updateThemeButton()
+        
+            //Taken from https://stackoverflow.com/questions/1144783/how-to-replace-all-occurrences-of-a-string-in-javascript
+            String.prototype.replaceAll = function (search, replacement) {
+                var target = this;
+                return target.replace(new RegExp(search, 'g'), replacement);
+            };
+        
+            getJSON("https://meta.fabricmc.net/v1/versions/game", function (data) {
+                populateVersions(data);
+            });
+        
+        
+        }, false);
+        
+        var mcVersions;
+        
+        function populateVersions(versions) {
+            var versionList = document.getElementById("versions");
+            var stable;
+        
+            for (i in versions) {
+                var version = versions[i];
+        
+                if (version.stable && stable == null) {
+                    stable = version.version;
+                }
+        
+                var option = document.createElement("option");
+                option.text = version.version;
+                versionList.add(option);
             }
-
-            var option = document.createElement("option");
-            option.text = version.version;
-            versionList.add(option);
-        }
-
-        mcVersions = versions;
-
-        var urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.has("version")) {
-            versionList.value = urlParams.get("version");
-        } else {
-            versionList.value = stable;
-        }
-
-        load();
-
-    }
-
-    function updateSelection() {
-        var versionList = document.getElementById("versions");
-        insertParam("version", versionList.value);
-    }
-
-    function load() {
-        var versionList = document.getElementById("versions");
-
-        var urlParams = new URLSearchParams(window.location.search);
-
-        var version = versionList.value;
-
-        if (urlParams.has("version")) {
-            version = urlParams.get("version");
-        }
-
-        getJSON("https://meta.fabricmc.net/v1/versions/loader/" + version, function (data) {
-            var meta = data[0];
-            var codeBlocks = document.getElementsByName("code");
-            for (i in codeBlocks) {
-                var block = codeBlocks[i];
-                block.innerHTML = block.innerHTML.replaceAll("{minecraft_version}", meta.mappings.gameVersion);
-                block.innerHTML = block.innerHTML.replaceAll("{yarn_version}", meta.mappings.version);
-                block.innerHTML = block.innerHTML.replaceAll("{loader_version}", meta.loader.version);
+        
+            mcVersions = versions;
+        
+            var urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has("version")) {
+                versionList.value = urlParams.get("version");
+            } else {
+                versionList.value = stable;
             }
-        });
-
-        var versionUrl = "https://maven.fabricmc.net/net/fabricmc/fabric/maven-metadata.xml";
-        var mavenStr = "net.fabricmc:fabric:";
-
-        var newApi = true;
-
-        for(i in mcVersions){
-            var vi = mcVersions[i].version;
-            if(vi === "1.14"){
-                newApi = false;
-                break;
+        
+            load();
+        
+        }
+        
+        function updateSelection() {
+            var versionList = document.getElementById("versions");
+            insertParam("version", versionList.value);
+        }
+        
+        function load() {
+            var versionList = document.getElementById("versions");
+        
+            var urlParams = new URLSearchParams(window.location.search);
+        
+            var version = versionList.value;
+        
+            if (urlParams.has("version")) {
+                version = urlParams.get("version");
             }
-            if(vi === version){
-                break;
-            }
-        }
-
-        if (newApi) {
-            versionUrl = "https://maven.fabricmc.net/net/fabricmc/fabric-api/fabric-api/maven-metadata.xml";
-            mavenStr = "net.fabricmc.fabric-api:fabric-api:";
-        }
-
-        var branch = "1.15"
-        //TODO make this better
-        if(version === "1.14.4"){
-            branch = "1.14"
-        }
-        if (version.startsWith("20w")) {
-            branch = "1.16"
-        }
-
-        findVersion(versionUrl, branch,
-            function (version) {
+        
+            getJSON("https://meta.fabricmc.net/v1/versions/loader/" + version, function (data) {
+                var meta = data[0];
                 var codeBlocks = document.getElementsByName("code");
                 for (i in codeBlocks) {
                     var block = codeBlocks[i];
-                    block.innerHTML = block.innerHTML.replaceAll("{fabric_version}", version);
-                    block.innerHTML = block.innerHTML.replaceAll("{fabric_maven}", mavenStr);
+                    block.innerHTML = block.innerHTML.replaceAll("{minecraft_version}", meta.mappings.gameVersion);
+                    block.innerHTML = block.innerHTML.replaceAll("{yarn_version}", meta.mappings.version);
+                    block.innerHTML = block.innerHTML.replaceAll("{loader_version}", meta.loader.version);
                 }
-            })
-
-
-    }
-
-    function findVersion(url, branch, onLoad) {
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                var parser = new DOMParser();
-                var xmlDoc = parser.parseFromString(xhttp.responseText, "text/xml");
-                
-                var versions = xmlDoc.getElementsByTagName("version");
-                var latestVersion = xmlDoc.getElementsByTagName("release")[0].childNodes[0].nodeValue;
-
-                Object.keys(versions).forEach(function(value, number) {
-                    var version = versions[number].childNodes[0].nodeValue;
-                    if(version.endsWith(branch)){
-                        latestVersion = versions[number].childNodes[0].nodeValue;
+            });
+        
+            var versionUrl = "https://maven.fabricmc.net/net/fabricmc/fabric/maven-metadata.xml";
+            var mavenStr = "net.fabricmc:fabric:";
+        
+            var newApi = true;
+        
+            for(i in mcVersions){
+                var vi = mcVersions[i].version;
+                if(vi === "1.14"){
+                    newApi = false;
+                    break;
+                }
+                if(vi === version){
+                    break;
+                }
+            }
+        
+            if (newApi) {
+                versionUrl = "https://maven.fabricmc.net/net/fabricmc/fabric-api/fabric-api/maven-metadata.xml";
+                mavenStr = "net.fabricmc.fabric-api:fabric-api:";
+            }
+        
+            var branch = "1.15"
+            //TODO make this better
+            if(version === "1.14.4"){
+                branch = "1.14"
+            }
+            if (version.startsWith("20w")) {
+                branch = "1.16"
+            }
+        
+            findVersion(versionUrl, branch,
+                function (version) {
+                    var codeBlocks = document.getElementsByName("code");
+                    for (i in codeBlocks) {
+                        var block = codeBlocks[i];
+                        block.innerHTML = block.innerHTML.replaceAll("{fabric_version}", version);
+                        block.innerHTML = block.innerHTML.replaceAll("{fabric_maven}", mavenStr);
                     }
-
-                    console.log(versions[number].childNodes[0].nodeValue)
-                });
-                onLoad(latestVersion)
-            }
+                })
+        
+        
+        }
+        
+        function findVersion(url, branch, onLoad) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var parser = new DOMParser();
+                    var xmlDoc = parser.parseFromString(xhttp.responseText, "text/xml");
+                    
+                    var versions = xmlDoc.getElementsByTagName("version");
+                    var latestVersion = xmlDoc.getElementsByTagName("release")[0].childNodes[0].nodeValue;
+        
+                    Object.keys(versions).forEach(function(value, number) {
+                        var version = versions[number].childNodes[0].nodeValue;
+                        if(version.endsWith(branch)){
+                            latestVersion = versions[number].childNodes[0].nodeValue;
+                        }
+        
+                        console.log(versions[number].childNodes[0].nodeValue)
+                    });
+                    onLoad(latestVersion)
+                }
+            };
+        
+            //Get around caching issues
+            var milliseconds = (new Date).getTime();
+            url += "?t=" + milliseconds
+        
+            xhttp.open("GET", url, true);
+            xhttp.send();
+        }
+        
+        function getJSON(url, callback) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', url, true);
+            xhr.responseType = 'json';
+            xhr.onload = function () {
+                var status = xhr.status;
+                if (status === 200) {
+                    callback(xhr.response);
+                } else {
+                    console.log('Something went wrong: ' + status);
+                }
+            };
+            xhr.send();
         };
-
-        //Get around caching issues
-        var milliseconds = (new Date).getTime();
-        url += "?t=" + milliseconds
-
-        xhttp.open("GET", url, true);
-        xhttp.send();
-    }
-
-    function getJSON(url, callback) {
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', url, true);
-        xhr.responseType = 'json';
-        xhr.onload = function () {
-            var status = xhr.status;
-            if (status === 200) {
-                callback(xhr.response);
+        
+        //Thanks https://stackoverflow.com/questions/486896/adding-a-parameter-to-the-url-with-javascript
+        function insertParam(key, value) {
+            key = encodeURI(key); value = encodeURI(value);
+        
+            var kvp = document.location.search.substr(1).split('&');
+        
+            var i = kvp.length; var x; while (i--) {
+                x = kvp[i].split('=');
+        
+                if (x[0] == key) {
+                    x[1] = value;
+                    kvp[i] = x.join('=');
+                    break;
+                }
+            }
+        
+            if (i < 0) { kvp[kvp.length] = [key, value].join('='); }
+        
+            //this will reload the page, it's likely better to store this until finished
+            document.location.search = kvp.join('&');
+        }
+        
+        function toggleTheme() {
+            var theme = Cookies.get('theme')
+            if (!theme) {
+                Cookies.set('theme', 'light')
             } else {
-                console.log('Something went wrong: ' + status);
+                if (theme === "dark") {
+                    Cookies.set('theme', 'light')
+                } else if (theme === "light") {
+                    Cookies.set('theme', 'dark')
+                }
             }
-        };
-        xhr.send();
-    };
-
-    //Thanks https://stackoverflow.com/questions/486896/adding-a-parameter-to-the-url-with-javascript
-    function insertParam(key, value) {
-        key = encodeURI(key); value = encodeURI(value);
-
-        var kvp = document.location.search.substr(1).split('&');
-
-        var i = kvp.length; var x; while (i--) {
-            x = kvp[i].split('=');
-
-            if (x[0] == key) {
-                x[1] = value;
-                kvp[i] = x.join('=');
-                break;
+            if (Cookies.get('theme')) {
+                document.body.id = Cookies.get('theme')
+            }
+            updateThemeButton()
+        }
+        
+        function updateThemeButton() {
+            var theme = document.body.id
+            var notTheme
+            if (theme === "dark") {
+                notTheme = "light"
+            } else if (theme === "light") {
+                notTheme = "dark"
+            }
+            document.getElementById("theme-icon").src = notTheme + ".svg"
+            document.getElementById("theme-text").innerText = notTheme
+            var themeButton = document.getElementById("theme-button")
+            if (themeButton.classList.contains("hidden")) {
+                themeButton.classList.add("from-js")
+                themeButton.classList.remove("hidden")
+                setTimeout(() => themeButton.classList.add("animate"), 0)
             }
         }
-
-        if (i < 0) { kvp[kvp.length] = [key, value].join('='); }
-
-        //this will reload the page, it's likely better to store this until finished
-        document.location.search = kvp.join('&');
-    }
-
-</script>
-
+        
+    </script>
 </html>
