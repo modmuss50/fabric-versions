@@ -21,6 +21,13 @@
     <p>Note fabric-api version may not be the correct version for the given minecraft version. See the <a
             href="https://minecraft.curseforge.com/projects/fabric/files">curseforge</a> page.</p>
 
+    <h3>Javadocs</h3>
+    <ul>
+    <li><a name="substituteLink" href="https://maven.fabricmc.net/docs/fabric-loader-{loader_version}/">Fabric Loader</a></li>
+    <li><a name="substituteLink" href="https://maven.fabricmc.net/docs/yarn-{yarn_version}/">Yarn (Minecraft)</a></li>
+    <li><a name="substituteLink" href="https://maven.fabricmc.net/docs/fabric-api-{fabric_version}/">Fabric API</a></li>
+    </ul>
+
     <h3>build.gradle</h3>
 
 
@@ -35,7 +42,19 @@
 }</code></pre>
     </div>
 
+    <h4>Javadoc linking</h4>
 
+    <div name="code">
+        <pre><code class="gradle">javadoc {
+    options {
+        links(
+            "https://maven.fabricmc.net/docs/fabric-api-{fabric_version}/", // Fabric API
+            "https://maven.fabricmc.net/docs/yarn-{yarn_version}/",
+            "https://maven.fabricmc.net/docs/fabric-loader-{loader_version}/"
+        )
+    }
+}</code></pre>
+    </div>
 
     <h3>gradle.properties (Example Mod)</h3>
     <div name="code">
@@ -149,13 +168,17 @@ fabric_version={fabric_version}</code></pre>
 
         getJSON("https://meta.fabricmc.net/v1/versions/loader/" + version, function (data) {
             var meta = data[0];
-            var codeBlocks = document.getElementsByName("code");
-            for (i in codeBlocks) {
-                var block = codeBlocks[i];
+            document.getElementsByName("substituteLink").forEach(function (value, index, array) {
+                var attr = value.attributes.getNamedItem("href");
+                attr.value = attr.value.replaceAll("{minecraft_version}", meta.mappings.gameVersion);
+                attr.value = attr.value.replaceAll("{loader_version}", meta.loader.version);
+                attr.value = attr.value.replaceAll("{yarn_version}", meta.mappings.version);
+            });
+            document.getElementsByName("code").forEach(function(block, index, array) {
                 block.innerHTML = block.innerHTML.replaceAll("{minecraft_version}", meta.mappings.gameVersion);
                 block.innerHTML = block.innerHTML.replaceAll("{yarn_version}", meta.mappings.version);
                 block.innerHTML = block.innerHTML.replaceAll("{loader_version}", meta.loader.version);
-            }
+            });
         });
 
         var versionUrl = "https://maven.fabricmc.net/net/fabricmc/fabric/maven-metadata.xml";
@@ -190,15 +213,16 @@ fabric_version={fabric_version}</code></pre>
 
         findVersion(versionUrl, branch,
             function (version) {
-                var codeBlocks = document.getElementsByName("code");
-                for (i in codeBlocks) {
-                    var block = codeBlocks[i];
+                document.getElementsByName("substituteLink").forEach(function (value, index, array) {
+                    var attr = value.attributes.getNamedItem("href");
+                    attr.value = attr.value.replaceAll("{fabric_version}", version);
+                });
+                document.getElementsByName("code").forEach(function (block, index, array) {
                     block.innerHTML = block.innerHTML.replaceAll("{fabric_version}", version);
                     block.innerHTML = block.innerHTML.replaceAll("{fabric_maven}", mavenStr);
-                }
-            })
-
-
+                });
+            }
+        )
     }
 
     function findVersion(url, branch, onLoad) {
