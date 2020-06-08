@@ -10,11 +10,14 @@
 	<style>
 		body{
             font: 400 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-            padding-left: 10%;
-            padding-right: 10%;
+            padding-left: 8%;
+            padding-right: 8%;
         }
         .clipboard_btn{
             padding-bottom: 2px;
+        }
+        @media screen and (min-width: 600px)  {
+            .mobile-break { display: none; }
         }
 	</style>
 </head>
@@ -41,11 +44,11 @@
 
 <div class = "border" style="padding-left: 1%;padding-right: 1%; padding-top: 1%;">
     <div>
-        <h4 style="float:left;">build.gradle</h4>
+        <h4 style="float:left;">build.gradle</h4><br class="mobile-break"><br class="mobile-break">
         <button style="float:right" data-clipboard-target="#fabric_gradle_code" class="clipboard_btn btn btn-light btn-lg"><i class="fa fa-clipboard" aria-hidden="true"></i>
-Copy to Clipboard</button>
+Copy to Clipboard</button><br>
     </div>
-    <br><br>
+    <br>
     <div name="code">
         <pre><code class="gradle" id="fabric_gradle_code">dependencies {
     minecraft "com.mojang:minecraft:{minecraft_version}"
@@ -58,7 +61,7 @@ Copy to Clipboard</button>
     </div>
 <br><hr><br>
     <div>
-        <h4 style="float:left;">gradle.properties</h4>
+        <h4 style="float:left;">gradle.properties</h4><br class="mobile-break"><br class="mobile-break">
         <button style="float:right" data-clipboard-target="#fabric_properties_code" class="clipboard_btn btn btn-light btn-lg"><i class="fa fa-clipboard" aria-hidden="true"></i>
 Copy to Clipboard</button><br>
     </div>
