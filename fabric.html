@@ -5,27 +5,46 @@
     <meta charset="utf-8">
     <title>Fabric Versions</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/default.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<style>
+		body{
+            font: 400 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            padding-left: 10%;
+            padding-right: 10%;
+        }
+	</style>
 </head>
 
 <body>
-    <h1>Fabric Latest Versions</h1>
-
-    <img alt="Discord" src="https://img.shields.io/discord/507304429255393322.svg?label=discord"> <img
+    <nav style="display:inline;">
+        <span class = "display-4" style="display:inherit;">
+            <img src = "https://fabricmc.net/assets/logo.png">fabric</span>
+    </nav>
+    <br>
+    <br>
+    <h1><span style="float: left">Fabric Latest Versions</span><span style="float: right"><img alt="Discord" src="https://img.shields.io/discord/507304429255393322.svg?label=discord"> <img
         alt="GitHub stars" src="https://img.shields.io/github/stars/FabricMC/yarn.svg?label=Yarn&style=social"> <img
-        alt="GitHub stars" src="https://img.shields.io/github/stars/FabricMC/fabric.svg?label=Fabric&style=social">
+        alt="GitHub stars" src="https://img.shields.io/github/stars/FabricMC/fabric.svg?label=Fabric&style=social"></span></h1>
 
-    <p>Minecraft Version:
+<br><br><br>
+    
+    <p>Minecraft Version: 
         <select name="versions" id="versions" onchange="updateSelection()">
         </select>
-    </p>
+        </p><br>
     <p>Note fabric-api version may not be the correct version for the given minecraft version. See the <a
-            href="https://minecraft.curseforge.com/projects/fabric/files">curseforge</a> page.</p>
+            href="https://minecraft.curseforge.com/projects/rift/files">curseforge</a> page.</p>
 
-    <h3>build.gradle</h3>
-
-
+<div class = "border" style="padding-left: 1%;padding-right: 1%;padding-top: 1%;">
+    <div>
+        <h3 style="float:left;">build.gradle</h3>
+        <button style="float:right" data-clipboard-target="#fabric_gradle_code" class="clipboard_btn btn btn-secondary btn-lg"><i class="fa fa-clipboard" aria-hidden="true"></i>
+Copy to Clipboard</button>
+    </div>
+    <br><br>
     <div name="code">
-        <pre><code class="gradle">dependencies {
+        <pre><code class="gradle" id="fabric_gradle_code">dependencies {
     minecraft "com.mojang:minecraft:{minecraft_version}"
     mappings "net.fabricmc:yarn:{yarn_version}:v2"
     modImplementation "net.fabricmc:fabric-loader:{loader_version}"
@@ -35,18 +54,21 @@
 }</code></pre>
     </div>
 
-
-
-    <h3>gradle.properties (Example Mod)</h3>
+    <div>
+        <h3 style="float:left;">gradle.properties (Example Mod)</h3>
+        <button style="float:right" data-clipboard-target="#fabric_properties_code" class="clipboard_btn btn btn-secondary btn-lg"><i class="fa fa-clipboard" aria-hidden="true"></i>
+Copy to Clipboard</button>
+    </div>
+    <br><br>
     <div name="code">
-        <pre><code class="properties">minecraft_version={minecraft_version}
+        <pre><code class="properties" id="fabric_properties_code">minecraft_version={minecraft_version}
 yarn_mappings={yarn_version}
 loader_version={loader_version}
 
 #Fabric api
 fabric_version={fabric_version}</code></pre>
     </div>
-
+    </div>
     <br>
     <hr>
 
@@ -54,7 +76,7 @@ fabric_version={fabric_version}</code></pre>
     <h1>Mappings Migration</h1>
     <p>Mappings can be auto updated by using the following command. See the <a href="https://fabricmc.net/wiki/tutorial:migratemappings">wiki page</a> for more help.</p>
     <div name="code">
-        <pre><code class="bash">gradlew migrateMappings --mappings "{yarn_version}"</code></pre>
+        <pre><code class="bash">./gradlew migrateMappings --mappings "{yarn_version}"</code></pre>
     </div>
 
     <hr>
@@ -62,6 +84,7 @@ fabric_version={fabric_version}</code></pre>
 
     <h3>The recommended loom version is <strong>0.2.6-SNAPSHOT</strong></h3>
     <h4>The unstable loom version is <strong>0.2.7-SNAPSHOT</strong></h4>
+    <h4>The latest loom version is <b id="latest_loom"><!--Please Help automate this part, I cant find a way to read maven-metdata.xml-->0.4.24</b></h4>
     <p>When upgrading to loom 0.2.6 make sure to take a look at the upgrade guide <a href="https://gist.github.com/modmuss50/5e9415c7b6ea0fc96e56002a2b5f4fc7">here</a></p>
 
     <br>
@@ -73,6 +96,12 @@ fabric_version={fabric_version}</code></pre>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js"></script>
 <script charset="UTF-8"
     src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/gradle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+
 
 <script>
     document.addEventListener('DOMContentLoaded', (event) => {
@@ -84,6 +113,9 @@ fabric_version={fabric_version}</code></pre>
 
 <script>
 
+    new ClipboardJS('.clipboard_btn');
+
+    
     document.addEventListener('DOMContentLoaded', function () {
 
         //Taken from https://stackoverflow.com/questions/1144783/how-to-replace-all-occurrences-of-a-string-in-javascript
@@ -95,7 +127,6 @@ fabric_version={fabric_version}</code></pre>
         getJSON("https://meta.fabricmc.net/v1/versions/game", function (data) {
             populateVersions(data);
         });
-
 
 
     }, false);
