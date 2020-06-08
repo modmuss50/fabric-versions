@@ -13,6 +13,9 @@
             padding-left: 10%;
             padding-right: 10%;
         }
+        .clipboard_btn{
+            padding-bottom: 2px;
+        }
 	</style>
 </head>
 
@@ -29,17 +32,17 @@
 
 <br><br><br>
     
-    <p>Minecraft Version: 
-        <select name="versions" id="versions" onchange="updateSelection()">
+    <p><span class="col-md-3">Minecraft Version:</span>
+        <select name="versions" id="versions" onchange="updateSelection()" class="form-control col-md-3">
         </select>
         </p><br>
     <p>Note fabric-api version may not be the correct version for the given minecraft version. See the <a
             href="https://minecraft.curseforge.com/projects/rift/files">curseforge</a> page.</p>
 
-<div class = "border" style="padding-left: 1%;padding-right: 1%;padding-top: 1%;">
+<div class = "border" style="padding-left: 1%;padding-right: 1%; padding-top: 1%;">
     <div>
-        <h3 style="float:left;">build.gradle</h3>
-        <button style="float:right" data-clipboard-target="#fabric_gradle_code" class="clipboard_btn btn btn-secondary btn-lg"><i class="fa fa-clipboard" aria-hidden="true"></i>
+        <h4 style="float:left;">build.gradle</h4>
+        <button style="float:right" data-clipboard-target="#fabric_gradle_code" class="clipboard_btn btn btn-light btn-lg"><i class="fa fa-clipboard" aria-hidden="true"></i>
 Copy to Clipboard</button>
     </div>
     <br><br>
@@ -53,13 +56,13 @@ Copy to Clipboard</button>
     modImplementation "{fabric_maven}{fabric_version}"
 }</code></pre>
     </div>
-
+<br><hr><br>
     <div>
-        <h3 style="float:left;">gradle.properties (Example Mod)</h3>
-        <button style="float:right" data-clipboard-target="#fabric_properties_code" class="clipboard_btn btn btn-secondary btn-lg"><i class="fa fa-clipboard" aria-hidden="true"></i>
-Copy to Clipboard</button>
+        <h4 style="float:left;">gradle.properties</h4>
+        <button style="float:right" data-clipboard-target="#fabric_properties_code" class="clipboard_btn btn btn-light btn-lg"><i class="fa fa-clipboard" aria-hidden="true"></i>
+Copy to Clipboard</button><br>
     </div>
-    <br><br>
+    <br>
     <div name="code">
         <pre><code class="properties" id="fabric_properties_code">minecraft_version={minecraft_version}
 yarn_mappings={yarn_version}
@@ -69,7 +72,6 @@ loader_version={loader_version}
 fabric_version={fabric_version}</code></pre>
     </div>
     </div>
-    <br>
     <hr>
 
     
@@ -82,14 +84,27 @@ fabric_version={fabric_version}</code></pre>
     <hr>
     <h1>Loom Version</h1>
 
-    <h3>The recommended loom version is <strong>0.2.6-SNAPSHOT</strong></h3>
-    <h4>The unstable loom version is <strong>0.2.7-SNAPSHOT</strong></h4>
-    <h4>The latest loom version is <b id="latest_loom"><!--Please Help automate this part, I cant find a way to read maven-metdata.xml-->0.4.24</b></h4>
-    <p>When upgrading to loom 0.2.6 make sure to take a look at the upgrade guide <a href="https://gist.github.com/modmuss50/5e9415c7b6ea0fc96e56002a2b5f4fc7">here</a></p>
-
     <br>
-
+    <table class="table table-bordered" style="font-size: 18px;">
+        <tr>
+            <th>Recommended</th>
+            <th>Stable</th>
+            <th>Latest</th>
+        </tr>
+        <tr>
+            <td>0.2.6-SNAPSHOT</td>
+            <td>0.2.7-SNAPSHOT</td>
+            <td id="loomlatestVersion">{latest-loom}</td>
+        </tr>
+    </table>
+    
+    <br>
+    <p>When upgrading to loom 0.2.6 make sure to take a look at the upgrade guide <a href="https://gist.github.com/modmuss50/5e9415c7b6ea0fc96e56002a2b5f4fc7">here</a></p>
+    
+    
     <p>Want to help improve this page? Fork it on <a href="https://github.com/modmuss50/fabric-versions">github</a></p>
+    <p>Note: Copying to clipboard will not work on browsers that support HTML 5 (most browsers do).<br>
+    It will be a problem only if you're using internet explorer, or another old browser.</p>
 
 </body>
 
@@ -191,7 +206,7 @@ fabric_version={fabric_version}</code></pre>
 
         var versionUrl = "https://maven.fabricmc.net/net/fabricmc/fabric/maven-metadata.xml";
         var mavenStr = "net.fabricmc:fabric:";
-
+        
         var newApi = true;
 
         for(i in mcVersions){
@@ -227,8 +242,12 @@ fabric_version={fabric_version}</code></pre>
                     block.innerHTML = block.innerHTML.replaceAll("{fabric_version}", version);
                     block.innerHTML = block.innerHTML.replaceAll("{fabric_maven}", mavenStr);
                 }
-            })
-
+            });
+        
+        findVersion("https://maven.modmuss50.me/fabric-loom/fabric-loom.gradle.plugin/maven-metadata.xml", null,
+            function (aversion) {
+                    document.getElementById("loomlatestVersion").innerHTML = document.getElementById("loomlatestVersion").innerHTML.replaceAll("{latest-loom}", aversion);
+            });
 
     }
 
@@ -257,7 +276,7 @@ fabric_version={fabric_version}</code></pre>
         //Get around caching issues
         var milliseconds = (new Date).getTime();
         url += "?t=" + milliseconds
-
+        
         xhttp.open("GET", url, true);
         xhttp.send();
     }
