@@ -25,6 +25,12 @@
             color:rgb(66, 66, 66);
             font-size: 26px;
         }
+        .left-float{
+        	float: left;
+        }
+        .right-float{
+        	float: right;
+        }
 	</style>
 </head>
 
@@ -36,7 +42,8 @@
     </nav></a>
     <br>
     <br>
-    <h1><span style="float: left">Fabric Latest Versions</span><span style="float: right"><img alt="Discord" src="https://img.shields.io/discord/507304429255393322.svg?label=discord"> <img
+    <h1><span class="left-float">Fabric Latest Versions</span>
+    <span class = "right-float"><img alt="Discord" src="https://img.shields.io/discord/507304429255393322.svg?label=discord"> <img
         alt="GitHub stars" src="https://img.shields.io/github/stars/FabricMC/yarn.svg?label=Yarn&style=social"> <img
         alt="GitHub stars" src="https://img.shields.io/github/stars/FabricMC/fabric.svg?label=Fabric&style=social"></span></h1>
 
@@ -51,8 +58,8 @@
 
 <div class = "border" style="padding-left: 1%;padding-right: 1%; padding-top: 1%;">
     <div>
-        <h4 style="float:left;">build.gradle</h4><br class="mobile-break"><br class="mobile-break">
-        <button style="float:right" data-clipboard-target="#fabric_gradle_code" class="clipboard_btn btn btn-light btn-lg"><i class="fa fa-clipboard" aria-hidden="true"></i>
+        <h4 class="left-float">build.gradle</h4><br class="mobile-break"><br class="mobile-break">
+        <button data-clipboard-target="#fabric_gradle_code" class="clipboard_btn btn btn-light btn-lg right-float"><i class="fa fa-clipboard" aria-hidden="true"></i>
 Copy to Clipboard</button><br>
     </div>
     <br>
@@ -68,8 +75,8 @@ Copy to Clipboard</button><br>
     </div>
 <br><hr><br>
     <div>
-        <h4 style="float:left;">gradle.properties</h4><br class="mobile-break"><br class="mobile-break">
-        <button style="float:right" data-clipboard-target="#fabric_properties_code" class="clipboard_btn btn btn-light btn-lg"><i class="fa fa-clipboard" aria-hidden="true"></i>
+        <h4 class="left-float">gradle.properties</h4><br class="mobile-break"><br class="mobile-break">
+        <button data-clipboard-target="#fabric_properties_code" class="clipboard_btn btn btn-light btn-lg right-float"><i class="fa fa-clipboard" aria-hidden="true"></i>
 Copy to Clipboard</button><br>
     </div>
     <br>
@@ -121,9 +128,7 @@ fabric_version={fabric_version}</code></pre>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js"></script>
 <script charset="UTF-8"
     src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/gradle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
 
 
