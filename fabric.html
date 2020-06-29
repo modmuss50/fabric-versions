@@ -25,7 +25,7 @@
 
 
     <div name="code">
-        <pre><code class="gradle">dependencies {
+        <pre><code class="gradle" id="gradleDependencies">dependencies {
     minecraft "com.mojang:minecraft:{minecraft_version}"
     mappings "net.fabricmc:yarn:{yarn_version}:v2"
     modImplementation "net.fabricmc:fabric-loader:{loader_version}"
@@ -34,18 +34,24 @@
     modImplementation "{fabric_maven}{fabric_version}"
 }</code></pre>
     </div>
+    <button onclick="copyDependencies('gradleDependencies')">
+        Copy to clipboard
+    </button>
 
 
 
     <h3>gradle.properties (Example Mod)</h3>
     <div name="code">
-        <pre><code class="properties">minecraft_version={minecraft_version}
+        <pre><code class="properties" id="exampleModDependencies">minecraft_version={minecraft_version}
 yarn_mappings={yarn_version}
 loader_version={loader_version}
 
 #Fabric api
 fabric_version={fabric_version}</code></pre>
     </div>
+    <button onclick="copyDependencies('exampleModDependencies')">
+        Copy to clipboard
+    </button>
 
     <br>
     <hr>
@@ -266,6 +272,22 @@ fabric_version={fabric_version}</code></pre>
 
         //this will reload the page, it's likely better to store this until finished
         document.location.search = kvp.join('&');
+    }
+
+
+    // Copying the dependencies text
+    var copyArea = document.createElement("TEXTAREA");
+    copyArea.style.height = "0";
+    copyArea.style.overflow = "hidden";
+    copyArea.style.position = "fixed";
+
+    function copyDependencies(textId) {
+        copyArea.innerHTML = document.getElementById(textId).innerText;
+
+        document.body.appendChild(copyArea);
+        copyArea.select();
+        document.execCommand("copy");
+        document.body.removeChild(copyArea);
     }
 
 </script>
