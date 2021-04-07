@@ -60,7 +60,7 @@ fabric_version={fabric_version}</code></pre>
     <hr>
     <h1>Loom Version</h1>
 
-    <h3>The recommended loom version is <strong>0.5-SNAPSHOT</strong></h3>
+    <h3>The recommended loom version is <strong>0.6-SNAPSHOT</strong></h3>
     <p>When upgrading to loom 0.2.6 make sure to take a look at the upgrade guide <a href="https://gist.github.com/modmuss50/5e9415c7b6ea0fc96e56002a2b5f4fc7">here</a></p>
 
     <br>
@@ -180,11 +180,17 @@ fabric_version={fabric_version}</code></pre>
 
         var branch = "1.15"
         //TODO make this better
-        if(version === "1.14.4"){
+        if(version.startsWith("1.14")){
             branch = "1.14"
         }
-        if (version.startsWith("20w")) {
+        if (version.startsWith("1.16")||version.startsWith("20w")) {
             branch = "1.16"
+        }
+        if (version.startsWith("20w4")||version === "20w51a"||version.startsWith("21w")) {
+            branch = "1.17"
+        }
+        if (version === "20w14infinite") {
+            branch = "20w14infinite"
         }
 
         findVersion(versionUrl, branch,
