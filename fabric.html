@@ -183,20 +183,14 @@ fabric_version={fabric_version}</code></pre>
         if(version.startsWith("1.14")){
             branch = "1.14"
         }
-        if (version.startsWith("1.16")) {
+        if (version.startsWith("1.16")||version.startsWith("20w")) {
             branch = "1.16"
         }
-        if (version.startsWith("20w")) {
-            branch = "1.16"
-        }
-        if (version.startsWith("20w4")) {
+        if (version.startsWith("20w4")||version === "20w51a"||version.startsWith("21w")) {
             branch = "1.17"
         }
-        if (version === "20w51a") {
-            branch = "1.17"
-        }
-        if (version.startsWith("21w")) {
-            branch = "1.17"
+        if (version === "20w14infinite") {
+            branch = "20w14infinite"
         }
 
         findVersion(versionUrl, branch,
