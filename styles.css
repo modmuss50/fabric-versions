@@ -1,0 +1,36 @@
+html, body {
+	background-color: #ddd;
+	font-family: sans-serif;
+	margin: 0px;
+}
+
+main {
+	background-color: #fff;
+	margin: 0px 10%;
+	padding: 1em;
+}
+
+p {
+	max-width: 30em;
+}
+
+.title {
+	font-size: 2.488rem;
+	margin-top: 0em;
+	
+}
+
+h1 {
+	font-size: 1.728rem;
+	margin-top: 1em;
+}
+
+h2 {
+	font-size: 1.2rem;
+}
+
+@media (max-width: 260px) {
+	main {
+		margin: 0px;
+	}
+}
